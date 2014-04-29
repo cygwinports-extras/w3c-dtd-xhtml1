@@ -1,3 +1,6 @@
+NAME="w3c-dtd-xhtml1"
+VERSION=20020801
+RELEASE=2
 CATEGORY="Text"
 SUMMARY="W3C XHTML 1.0 DTD"
 DESCRIPTION="This specification defines the Second Edition of XHTML 1.0,
@@ -5,7 +8,9 @@ a reformulation of HTML 4 as an XML 1.0 application, and three DTDs
 corresponding to the ones defined by HTML 4."
 HOMEPAGE="http://www.w3.org/TR/xhtml1/"
 SRC_URI=${HOMEPAGE}"/xhtml1.tgz"
-SRC_DIR="xhtml1-${PV}"
+SRC_DIR="xhtml1-${VERSION}"
+
+ARCH=noarch
 
 DEPEND="/usr/bin/xmlcatalog"
 
@@ -27,11 +32,11 @@ src_install() {
 
 	cat > ${C}/postinstall.sh <<_EOF
 /usr/bin/xmlcatalog --noout --add nextCatalog "file://$dtddir/catalog.xml" "" /etc/xml/catalog
-/usr/bin/install-catalog --add /etc/sgml/catalog $dtddir/xhtml.soc
+/usr/bin/install-catalog --add /etc/sgml/${NAME}.cat $dtddir/xhtml.soc
 _EOF
 
 	cat > ${C}/preremove.sh <<_EOF
 /usr/bin/xmlcatalog --noout --del "file://$dtddir/catalog.xml" /etc/xml/catalog
-/usr/bin/install-catalog --remove /etc/sgml/catalog $dtddir/xhtml.soc
+/usr/bin/install-catalog --remove /etc/sgml/${NAME}.cat $dtddir/xhtml.soc
 _EOF
 }
